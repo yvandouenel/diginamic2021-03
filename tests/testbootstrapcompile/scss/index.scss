@@ -1,8 +1,12 @@
 // import de la police de caractères
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
-// import des mes propres fichiers scss
+// import des variables à réécrire et à appeler avant
+// l'import de bootstrap
 @import "./variables.scss";
 
 // import des fichiers scss de bootstrap
 @import "./../bootstrap/scss/bootstrap.scss";
+
+// import des mes propres fichiers scss
+@import "./global.scss";
