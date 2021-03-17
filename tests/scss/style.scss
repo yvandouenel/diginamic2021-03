@@ -1,0 +1,12 @@
+// Définition d'une variable qui stocke une couleur
+$primary-color: #CCC;
+
+// imbrication (nesting)
+body {
+  color: $primary-color;
+  footer {
+    nav {
+      border: 1px solid black;
+    }
+  }
+}
