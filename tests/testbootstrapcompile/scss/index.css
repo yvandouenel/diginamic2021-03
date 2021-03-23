@@ -7823,4 +7823,12 @@ a.text-dark:hover, a.text-dark:focus {
 .text-black {
   color: #000; }
 
+.bg-black {
+  background-color: #000; }
+
+a:active {
+  color: red !important; }
+
+/* Paragraphes actifs */
+
 /*# sourceMappingURL=index.css.map */

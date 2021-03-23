@@ -8,5 +8,7 @@
 // import des fichiers scss de bootstrap
 @import "./../bootstrap/scss/bootstrap.scss";
 
-// import des mes propres fichiers scss
+// import des mes propres fichiers scss. Tous les fichiers importés
+// ci-dessous utilisent les variables de bootstrap. Il faut donc les 
+// importer après bootstrap.scss
 @import "./global.scss";
