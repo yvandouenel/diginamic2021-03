@@ -14,7 +14,7 @@ h1.onclick = function() {
   
  /*  if(p.hidden == true) p.hidden = false;
   else p.hidden = true; */
-  xxxx.classList.toggle("hidden");
+  p.classList.toggle("hidden");
 }
 
 // Faire fonctionner ce code avec element.classList.toggle("hidden");
