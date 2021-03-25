@@ -17,5 +17,7 @@ h1.onclick = function() {
   p.classList.toggle("hidden");
 }
 
-// Faire fonctionner ce code avec element.classList.toggle("hidden");
-// Cela implique que vous ayez écrit le code css .hidden {display: none;}
+// Faire en sorte qu'au click sur un h1, le paragraphe suivant soit 
+// caché ou montré .
+// Il faudra parcourir les résultats de querySelectorAll
+// et il faudra trouver le frère ou soeur suivant (next sibling)
