@@ -10,14 +10,14 @@ const input_chf= document.querySelector("#chf");
 form_converter.onsubmit = function(event) {
   event.preventDefault();
   if(input_euro.value) {
-    document.querySelector("#euro").value = input_euro.value * 1.06;
+    input_chf.value = input_euro.value * 1.06;
   }
   if(input_chf.value) {
     input_euro.value = input_chf.value / 1.06;
   }
 }
 
-// Quand on commence à modifier un input, l'autre input directemen converti
+// Quand on commence à modifier un input, l'autre input est directement converti
 input_chf.oninput = function() {
   input_euro.value = input_chf.value / 1.06;
 }
