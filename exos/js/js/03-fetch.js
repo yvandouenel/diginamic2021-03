@@ -38,7 +38,19 @@ form_user.onsubmit = function(e) {
   // Appel de la fonction getUSer (promesse)
   getUser(token, login, pwd)
   .then((data) => {
-    console.log("Données de l'utilisateur : ",data);
+    console.log("Données de l'utilisateur : ", data);
+
+    // Maintenant que j'ai l'utilisateur, je vais pouvoir appeler
+    // getTerms
+    const user = {
+      uid: data.current_user.uid,
+      login: login,
+      pwd: pwd
+    }
+    return getTerms(user,token);
+  })
+  .then((data) => {
+    console.log("Termes de l'utilisateur : ", data);
   })
   .catch(error => { console.log("Erreur attrapée dans getUser: ", error.message) });
 }
@@ -75,7 +87,7 @@ function getUser(token, login, pwd) {
 
 function getTerms(user, token) {
   // création de la requête
-  console.log("Dans getTerms de coopernet. User = ", user);
+  console.log("Dans getTerm -  User = ", user);
   return fetch("https://www.coopernet.fr/memo/themes/" + user.uid, {
     credentials: "same-origin",
     method: "GET",
