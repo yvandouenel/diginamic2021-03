@@ -17,20 +17,8 @@ class App extends DomUtils {
     this.fd.getToken()
     .then((data) => {
       this.token = data;
-      new Form(this.domElements.main,{
-        inputs: [
-          {
-            label: {
-              name: "Login",
-              for: "login"
-            },
-            input: {
-              type: "text",
-              id: "login"
-            }
-          }
-        ]
-      });
+      console.log('this.domElements.form_login : ', this.domElements.form_login);
+      this.domElements.form_login.classList.remove("hidden");
     })
     .catch((error) => {
       console.error('Erreur catché dans getToken : ' + error.message);
@@ -43,11 +31,45 @@ class App extends DomUtils {
     const header = this.createCompleteDomElement("header","",[], document.getElementById("app"));
     const main = this.createCompleteDomElement("main","",[], document.getElementById("app"));
     const footer = this.createCompleteDomElement("footer","",[], document.getElementById("app"));
-
+    const form_login = new Form(main,{
+      inputs: [
+        {
+          label: {
+            name: "Login",
+            for: "login"
+          },
+          input: {
+            type: "text",
+            id: "login"
+          }
+        },
+        {
+          label: {
+            name: "Mot de passe",
+            for: "pwd"
+          },
+          input: {
+            type: "password",
+            id: "pwd"
+          }
+        },
+        {
+          label: {
+            name: "",
+            for: ""
+          },
+          input: {
+            type: "submit",
+            id: ""
+          }
+        }
+      ]
+    });
     return {
       header: header,
       main: main,
-      footer: footer
+      footer: footer,
+      form_login: form_login
     }
   }
 }

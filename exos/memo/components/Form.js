@@ -6,7 +6,10 @@ export default class Form extends DomUtils {
     // Création de la balise form
     this.domForm = this.createCompleteDomElement("form",
       "",
-      [],
+      [{
+        name: "class",
+        value: "hidden"
+      }],
       parentElt);
     console.log('inputs : ', form_elements.inputs);
     for (const elt of form_elements.inputs) {
@@ -30,10 +33,10 @@ export default class Form extends DomUtils {
             value: elt.input.type
           }
         ],
-        this.domForm);
-
+        this.domForm);  
     }
-    // Création des inputs
 
+    return this.domForm;
   }
+
 }
