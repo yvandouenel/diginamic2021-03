@@ -12,14 +12,18 @@ export default class DomUtils {
  * @param {DOM element} parent_element 
  * @returns {DOM element} elt
  */
-  createCompleteDomElement(tag_name, content, class_name, parent_element) {
+  createCompleteDomElement(tag_name, content, attributes , parent_element) {
     console.log('Dans createCompleteDomElement');
     // Création d'un élément du DOM mais qui n'est pas encore positionné
     // dans la hiérarchie du document
     const elt = document.createElement(tag_name);
 
     elt.textContent = content;
-    elt.setAttribute("class", class_name);
+    
+    for(const attribute of attributes) {
+      elt.setAttribute(attribute.name, attribute.value);
+    }
+
     parent_element.append(elt);
 
     return elt;
