@@ -2,7 +2,13 @@ export default class FetchData {
   constructor() {
 
   }
-  getToken = function () {
+  /**
+   * Va récupérer le token sur le serveur
+   * Le token sera indispensable pour toute future communication avec le serveur
+   * 
+   * @returns promise 
+   */
+  getToken () {
     // Récupération du token via un fetch. Ici le point d'entrée (endpoint) est
     // https://www.coopernet.fr/rest/session/token/
     // Ma requête utilise le "verbe" par défaut qui est "GET"
@@ -18,6 +24,14 @@ export default class FetchData {
       })
   }
 
+  /**
+   * 
+   * @param {string} token 
+   * @param {string} login 
+   * @param {string} pwd 
+   * 
+   * @returns promise
+   */
   getUser(token, login, pwd) {
     // création de la requête
     console.log("Dans getUser de FetchData");
@@ -45,4 +59,33 @@ export default class FetchData {
         }
       })
   };
+
+  getTerms(user, token) {
+    // création de la requête
+    console.log("Dans getTerm -  User = ", user);
+    return fetch("https://www.coopernet.fr/memo/themes/" + user.uid, {
+      credentials: "same-origin",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/hal+json",
+        "X-CSRF-Token": token,
+        Authorization: "Basic " + btoa(user.login + ":" + user.pwd), // btoa = encodage en base 64
+      },
+    })
+      .then((response) => {
+        console.log("data reçues dans getTerms avant json() :", response);
+        if (response.status === 200) return response.json();
+        else throw new Error("Problème de réponse ", response);
+      })
+      .then((data) => {
+        console.log("data reçues dans getTerms :", data);
+        if (data) {
+          console.log("termes : ", data);
+          return data;
+        } else {
+          throw new Error("Problème de data " + data.message);
+        }
+      });
+  }
 }
+

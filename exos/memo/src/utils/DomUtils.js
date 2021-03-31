@@ -8,8 +8,9 @@ export default class DomUtils {
  * 
  * @param {string} tag_name 
  * @param {string} content 
- * @param {string} class_name 
+ * @param {array} attributes 
  * @param {DOM element} parent_element 
+ * 
  * @returns {DOM element} elt
  */
   createCompleteDomElement(tag_name, content, attributes , parent_element) {

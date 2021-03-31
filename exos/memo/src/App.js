@@ -11,40 +11,50 @@ class App extends DomUtils {
     this.terms = [];
     this.columns = [];
 
-    // Création et récupération des élements de base du dom
+    // Création et récupération des élements de base du dom dans l'objet this.domElements
+    // this.domElements est une propriété de type objet
     this.domElements = this.render();
 
     // Instanciation du service FetchData et récupération du token
     this.fd = new FetchData();
-    this.getTokenAndUser();
+    this.getToken();
 
-
+    // Gestion des événements
+    this.manageEvents();
   }
 
-  getTokenAndUser() {
+  manageEvents() {
+    console.log('Dans manageEvents');
+    // Gestion de la sousmission du formulaire d'authentification
+
+    // Dans une fonction fléchée, le this ne dépend plus de qui appelle la fonction
+    // mais bien de où la fonction a été déclarée.
+    this.domElements.form_login.onsubmit = (event) => {
+      event.preventDefault();
+      const login = document.getElementById("login").value;
+      const pwd = document.getElementById("pwd").value;
+
+      this.fd.getUser(this.token, login, pwd)
+        .then((data) => {
+          console.log('user dans manageEvents : ', data);
+          // On hydrate la propriété user
+          this.user = {
+            uid: data.current_user.uid,
+            login: login,
+            pwd: pwd
+          }
+        })
+        .catch((error) => {
+          console.error("Erreur attrapée dans manageEvents : " + error.message)
+        })
+    }
+  }
+
+  getToken() {
     this.fd.getToken()
       .then((data) => {
         this.token = data;
-        console.log('this.domElements.form_login : ', this.domElements.form_login);
         this.domElements.form_login.classList.remove("hidden");
-        // J'ai le token et j'ai affiché le formulaire, donc je peux aller
-        // Chercher les données de l'utilisateur
-        this.domElements.form_login.onsubmit = function (event) {
-          event.preventDefault();
-          const login = document.getElementById("login").value;
-          const pwd = document.getElementById("pwd").value;
-          // Qui est this ?
-          console.log('this : ', this);
-          /* this.fd.getUser(this.token, login, pwd)
-          .then((data) => {
-            console.log('user dans getTokenAndUser : ', data);
-          })
-          .catch((error) => {
-            console.error("Erreur attrapée dans getTokenAndUser : " + error.message)
-          }) */
-        }
-
-
       })
       .catch((error) => {
         console.error('Erreur catché dans getToken : ' + error.message);
