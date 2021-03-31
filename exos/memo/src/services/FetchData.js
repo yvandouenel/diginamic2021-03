@@ -94,5 +94,102 @@ export default class FetchData {
         }
       });
   }
+
+  getCards(user, token, term_number) {
+    return fetch("https://www.coopernet.fr" +
+      "/memo/list_cartes_term/" +
+      user.uid +
+      "/" +
+      term_number +
+      "&_format=json&time=" +
+      Math.floor(Math.random() * 10000), {
+      credentials: "same-origin",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/hal+json",
+        "X-CSRF-Token": token,
+        "Authorization": "Basic " + btoa(user.uid + ":" + user.pwd) // btoa = encodage en base 64
+      }
+    })
+    .then(response => {
+      if (response.status === 200) return response.json(); // vérifie que le format json est respecté
+      else throw new Error("Problème de réponse ", response);
+    })
+    .then(data => {
+      console.log("data reçues dans getTerms :", data);
+      if (data) {
+        return data;
+      } else {
+        throw new Error("Problème de data ", data);
+      }
+    });
+  }
+
+  addCard(user, card, termid) {
+    console.log("Dans addCard de FetchData");
+    
+    return fetch("https://www.coopernet.fr/node?_format=hal_json", {
+      credentials: "same-origin",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/hal+json",
+        "X-CSRF-Token": this.token,
+        Authorization: "Basic " + btoa(user.login + ":" + user.pwd) // btoa = encodage en base 64
+      },
+      body: JSON.stringify({
+        _links: {
+          type: {
+            href: this.url_server + "rest/type/node/carte"
+          }
+        },
+        title: [
+          {
+            value: card.question
+          }
+        ],
+        field_carte_question: [
+          {
+            value: card.question
+          }
+        ],
+        field_carte_reponse: [
+          {
+            value: card.reponse
+          }
+        ],
+        field_carte_explication: [
+          {
+            value: card.explication
+          }
+        ],
+        field_carte_colonne: [
+          {
+            target_id: card.colonne,
+            url: "/taxonomy/term/" + card.colonnne
+          }
+        ],
+        field_carte_thematique: [
+          {
+            target_id: termid,
+            url: "/taxonomy/term/" + termid
+          }
+        ],
+        type: [
+          {
+            target_id: "carte"
+          }
+        ]
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.hasOwnProperty("created") && data.created[0].value) {
+          return data;
+        } else {
+          throw new Error("Problème de données dans addCard  : ", data.message);
+        }
+      });
+  };
+  
 }
 

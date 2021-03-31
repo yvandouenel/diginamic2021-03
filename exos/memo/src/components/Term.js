@@ -27,9 +27,19 @@ export default class Term extends DomUtils {
   }
   
   manageEvents() {
+
+    // Gestion du click sur un bouton de terme (rubrique)
     this.domElement.onclick = () => {
       console.log('click sur un terme');
-      console.log('this dans manageEvents de Term', this);
+
+      // Appel de la fonction qui permet d'aller chercher les cartes
+      this.app.fd.getCards(this.app.user, this.app.token, this.id)
+      .then((data) => {
+        console.log('Cards dans manageEvents de Term : ', data);
+      })
+      .catch((error) => {
+        console.error('Erreur attrapée dans manageEvents de Term :' + error.message);
+      });
     }
   }
 
