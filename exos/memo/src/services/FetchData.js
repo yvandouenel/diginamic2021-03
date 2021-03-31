@@ -60,9 +60,16 @@ export default class FetchData {
       })
   };
 
+  /**
+   * Récupère les termes (rubriques) d'un utilisateur donné
+   * @param {object} user 
+   * @param {string} token 
+   * 
+   * @returns promise
+   */
   getTerms(user, token) {
     // création de la requête
-    console.log("Dans getTerm -  User = ", user);
+    console.log("Dans getTerms -  User = ", user);
     return fetch("https://www.coopernet.fr/memo/themes/" + user.uid, {
       credentials: "same-origin",
       method: "GET",

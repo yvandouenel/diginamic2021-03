@@ -1,6 +1,7 @@
 import DomUtils from "./utils/DomUtils.js";
 import Form from "./components/Form.js";
 import FetchData from "./services/FetchData.js";
+import Term from "./components/Term.js";
 
 class App extends DomUtils {
   constructor() {
@@ -43,6 +44,19 @@ class App extends DomUtils {
             login: login,
             pwd: pwd
           }
+          return this.fd.getTerms(this.user, this.token);
+        })
+        .then((data) => {
+          // Hydratation des termes
+          this.terms = data;
+
+          // On cache le formulaire
+          this.domElements.form_login.classList.add("hidden");
+
+          // On crée et on affiche les termes (rubriques)
+          for(let i = 0; i < this.terms.length; i++) {
+            new Term(this.terms[i].id,this.terms[i].name, this);
+          }
         })
         .catch((error) => {
           console.error("Erreur attrapée dans manageEvents : " + error.message)
@@ -63,7 +77,12 @@ class App extends DomUtils {
 
   render() {
     // Création des éléments de base du dom
-    const header = this.createCompleteDomElement("header", "", [], document.getElementById("app"));
+    const header = this.createCompleteDomElement("header", "", [
+      {
+        name : "class",
+        value : "d-flex justify-content-center"
+      }
+    ], document.getElementById("app"));
     const main = this.createCompleteDomElement("main", "", [], document.getElementById("app"));
     const footer = this.createCompleteDomElement("footer", "", [], document.getElementById("app"));
     const form_login = new Form(main, {
