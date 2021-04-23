@@ -29,6 +29,13 @@ $res = addition(5, -2);
 echo "Résultat de addition : ";
 var_dump($res);
 
+function helloWorld() {
+  echo "Hello World";
+}
+
+$ma_variable = "helloWorld";
+$ma_variable(); // appelle helloWorld()
+
 ?> 
 <?= "resultat : " . $result . "<br>" ?>
 <?= "num : " . $num ?>

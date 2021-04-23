@@ -1,0 +1,13 @@
+<?php
+ $title = "Expériences - CV Yvan Douënel - Dév js/php";
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<?php require_once(__DIR__. './../commons/head.php') ?>
+<body>
+<?php require_once(__DIR__. './../commons/header.php') ?>
+ <main>
+ <h1>Expériences</h1>
+ <p>Expériences Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error assumenda, unde ea nostrum aut amet perferendis officiis qui perspiciatis omnis velit odio enim optio harum quas dolores sint dolorum blanditiis.</p>
+ </main>
+ <?php require_once(__DIR__. './../commons/footer.php') ?>
