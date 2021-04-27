@@ -10,6 +10,27 @@ catch(PDOException $e) {
   echo "Pb de connexion à la base de données ", $e->getMessage();
 }
 
+// Est-ce que je dois modifier un enregistrement ?
+// Si je dois modifier un enregistrement, c'est que je suis en méthode POST
+
+if(isset($_POST["nid"])) {
+  try {
+    $data = [
+        'nid' => $_POST['nid'],
+        'title' => $_POST['title']
+    ];
+
+    $req = $pdo->prepare('UPDATE node SET 
+        title = :title    
+        WHERE nid = :nid');
+    $req->execute($data);
+
+  } catch (PDOException $e) {
+      echo "Pb de requête", $e->getMessage();
+  }
+}
+
+// Vue de tous mes nodes
 // Paramètres de la requête préparée
 $data = [
   'type' => "article"
