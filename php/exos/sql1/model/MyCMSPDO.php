@@ -1,5 +1,6 @@
 <?php
 class MyCMSPDO {
+
   function __construct() {
     
   }
@@ -17,5 +18,8 @@ class MyCMSPDO {
     catch(PDOException $e) {
       echo "Pb de connexion à la base de données ", $e->getMessage();
     }
+  }
+  public static function getAllNodes() {
+
   }
 }

@@ -1,6 +1,7 @@
 <?php 
 // Récupération de l'instance de pdo
-require_once($_SERVER["DOCUMENT_ROOT"] . "/exos/sql1/model/pdo.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/exos/sql1/model/MyCMSPDO.php");
+$pdo = MyCMSPDO::getPDOInstance();
 
 // Récupération de la données via une requête préparée
 // Paramètres de la requête préparée
