@@ -1,16 +1,8 @@
 <?php 
+// Récupération de l'instance de pdo
+require_once($_SERVER["DOCUMENT_ROOT"] . "/exos/sql1/model/pdo.php");
 
 // Récupération de la données via une requête préparée
-try {
-  $pdo = new PDO('mysql:host=local.php.my;dbname=mycms;charset=utf8', 'diginamic', '123');
-  // -> permet d'appeler les méthodes (ou les attributs) de l'objet
-  // :: Appel d'une méthode "static" ou méthode de classe
-  $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
-}
-catch(PDOException $e) {
-  echo "Pb de connexion à la base de données ", $e->getMessage();
-}
-
 // Paramètres de la requête préparée
 $data = [
   'nid' => $_GET['nid'] 
@@ -37,11 +29,30 @@ $req->execute($data);
     <h1>Modification du node  <?= $_GET['nid'] ?></h1>
     <form action="/exos/sql1/index.php" method="POST" class="form">
     <?php $record = $req->fetch(PDO::FETCH_ASSOC); ?>
+    <label for="type">Type</label>
+      <input type="text" value="<?= $record['type'] ?>" name="type"> 
+      <br><br>
+      
       <label for="title">Titre</label>
       <input type="text" value="<?= $record['title'] ?>" name="title"> 
-
+      <br><br>
+      
       <label for="body">Corps</label>
       <textarea name="body"><?= $record['body'] ?></textarea>
+      <br><br>
+
+      <label for="summary">Résumé</label>
+      <textarea name="summary"><?= $record['summary'] ?></textarea>
+      <br><br>
+
+      <label for="seo_title">Titre SEO</label>
+      <input type="text" value="<?= $record['seo_title'] ?>" name="seo_title"> 
+      <br><br>
+
+      <label for="path">Chemin</label>
+      <input type="text" value="<?= $record['path'] ?>" name="path"> 
+
+      <br><br>
 
       <input type="hidden" value="<?= $record['nid'] ?>" name="nid">
     <input type="submit" value="envoyer">

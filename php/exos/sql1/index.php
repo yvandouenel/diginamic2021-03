@@ -1,17 +1,10 @@
 <?php
+// Récupération de l'instance de pdo
+require_once($_SERVER["DOCUMENT_ROOT"] . "/exos/sql1/model/MyCMSPDO.php");
+$pdo = MyCMSPDO::getPDOInstance();
+
 // Récupération de la données via une requête préparée
-try {
-  // new appelle le constructeur (__construct) de la classe PDO
-  $pdo = new PDO('mysql:host=local.php.my;dbname=mycms;charset=utf8', 'diginamic', '123');
-  // -> permet d'appeler les méthodes (ou les attributs) de l'objet
-  // :: Appel d'une méthode "static" ou méthode de classe
-  // setAttribute est une méthode de la classe PDO
-  // ATTR_ERRMODE est attribut static (sans $ signifie que c'est une constante de classe)
-  $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
-}
-catch(PDOException $e) {
-  echo "Pb de connexion à la base de données ", $e->getMessage();
-}
+
 
 // Est-ce que je dois modifier un enregistrement ?
 // Si je dois modifier un enregistrement, c'est que je suis en méthode POST
@@ -20,13 +13,21 @@ if(isset($_POST["nid"])) {
   try {
     $data = [
         'nid' => $_POST['nid'],
+        'type' => $_POST['type'],
         'title' => $_POST['title'],
-        'body' => $_POST['body']
+        'body' => $_POST['body'],
+        'summary' => $_POST['summary'],
+        'seo_title' => $_POST['seo_title'],
+        'path' => $_POST['path']
     ];
 
     $req = $pdo->prepare('UPDATE node SET 
+        type = :type,    
         title = :title,    
-        body = :body    
+        body = :body,    
+        summary = :summary,   
+        seo_title = :seo_title,    
+        path = :path    
         WHERE nid = :nid');
     $req->execute($data);
 
