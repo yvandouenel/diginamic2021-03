@@ -1,18 +1,9 @@
 <?php 
 // Récupération de l'instance de pdo
 require_once($_SERVER["DOCUMENT_ROOT"] . "/exos/sql1/model/MyCMSPDO.php");
-$pdo = MyCMSPDO::getPDOInstance();
 
-// Récupération de la données via une requête préparée
-// Paramètres de la requête préparée
-$data = [
-  'nid' => $_GET['nid'] 
-];
-// Requête préparée
-$req = $pdo->prepare('SELECT * FROM node WHERE nid = :nid');
-
-//Execution de la requête
-$req->execute($data);
+// Récupération d'un node
+$record = MyCMSPDO::getNode();
 
 ?>
 
@@ -29,7 +20,7 @@ $req->execute($data);
   <div class="container">
     <h1>Modification du node  <?= $_GET['nid'] ?></h1>
     <form action="/exos/sql1/index.php" method="POST" class="form">
-    <?php $record = $req->fetch(PDO::FETCH_ASSOC); ?>
+  
     <label for="type">Type</label>
       <input type="text" value="<?= $record['type'] ?>" name="type"> 
       <br><br>

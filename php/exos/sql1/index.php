@@ -1,53 +1,17 @@
 <?php
 // Récupération de l'instance de pdo
 require_once($_SERVER["DOCUMENT_ROOT"] . "/exos/sql1/model/MyCMSPDO.php");
-$pdo = MyCMSPDO::getPDOInstance();
-
-// Récupération de la données via une requête préparée
-
 
 // Est-ce que je dois modifier un enregistrement ?
 // Si je dois modifier un enregistrement, c'est que je suis en méthode POST
-
 if(isset($_POST["nid"])) {
-  try {
-    $data = [
-        'nid' => $_POST['nid'],
-        'type' => $_POST['type'],
-        'title' => $_POST['title'],
-        'body' => $_POST['body'],
-        'summary' => $_POST['summary'],
-        'seo_title' => $_POST['seo_title'],
-        'path' => $_POST['path']
-    ];
-
-    $req = $pdo->prepare('UPDATE node SET 
-        type = :type,    
-        title = :title,    
-        body = :body,    
-        summary = :summary,   
-        seo_title = :seo_title,    
-        path = :path    
-        WHERE nid = :nid');
-    $req->execute($data);
-
-  } catch (PDOException $e) {
-      echo "Pb de requête", $e->getMessage();
-  }
+  MyCMSPDO::updateNode();
 }
 
-// Vue de tous mes nodes
-// Paramètres de la requête préparée stockés dans un tableau associatif
-$data = [
-  'type' => "article"
-];
-// Requête préparée. pdo->prepare renvoie un objet puisque l'on va pouvoir appeler la 
-// méthode execute (cf ligne 47). Attention, cette requête attend des paramètres (:type)
-$req = $pdo->prepare('SELECT * FROM node WHERE type = :type');
+// Récupération des données venant de la base de données via une requête préparée
+$req = MyCMSPDO::getAllNodes();
 
-//Execution de la requête. L'argument $data va permettre de remplacer les paramatres de la 
-// requête
-$req->execute($data);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
