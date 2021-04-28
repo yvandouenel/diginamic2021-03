@@ -24,17 +24,9 @@ class MyCMSPDO
   {
     $pdo = self::getPDOInstance();
     // Vue de tous mes nodes
-    // Paramètres de la requête préparée stockés dans un tableau associatif
-    $data = [
-      'type' => "article"
-    ];
-    // Requête préparée. pdo->prepare renvoie un objet puisque l'on va pouvoir appeler la 
-    // méthode execute (cf ligne 47). Attention, cette requête attend des paramètres (:type)
-    $req = $pdo->prepare('SELECT * FROM node WHERE type = :type');
-
-    //Execution de la requête. L'argument $data va permettre de remplacer les paramatres de la 
-    // requête
-    $req->execute($data);
+    // Paramètres de la requête
+    $sql = 'select * from node;';
+    $req = $pdo->query($sql);
     return $req;
   }
   public static function updateNode()
@@ -80,5 +72,24 @@ class MyCMSPDO
 
     // Récupération de la donnée
     return $req->fetch(PDO::FETCH_ASSOC);
+  }
+  public static function addNode()
+  {
+    $pdo = self::getPDOInstance();
+    try {
+      $data = [
+        'type' => 'article',
+        'title' => $_POST["title"],
+        'summary' => $_POST["summary"],
+        'seo_title' => $_POST['seo_title'],
+        'body' => $_POST["body"],
+        'path' => $_POST["path"]
+      ];
+      $req = $pdo->prepare('INSERT INTO node (type,title,body,path,summary,seo_title) VALUES 
+      (:type,:title,:body,:path,:summary,:seo_title)');
+      $req->execute($data);
+    } catch (PDOException $e) {
+      echo "Pb de requête", $e->getMessage();
+    }
   }
 }
