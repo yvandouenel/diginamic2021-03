@@ -1,25 +1,20 @@
 <?php
-// import de ma classe qui me permet de communiquer avec la BDD
-require_once($_SERVER["DOCUMENT_ROOT"] . "/model/Model.php");
+// initialisation des routes
+require_once($_SERVER["DOCUMENT_ROOT"] . "/controller/Route.php");
+Route::initRoutes();
 
-// parse_url() analyse une URL et retourne ses composants
-$parsed_url = parse_url($_SERVER['REQUEST_URI']);
+// Récupération du controller
+require_once($_SERVER["DOCUMENT_ROOT"] . "/controller/Controller.php");
 
+// Vérification de la route en cours (demandée par l'internaute)
+$route = Route::check();
 
-// soit l'url en question a un chemin et sinon le chemin est la racine (opérateur ternaire)
-$path = isset($parsed_url['path']) ? $parsed_url['path'] : '/';
+// Si ma route n'est pas nulle, alors, je m'en sers 
+if($route) {
+ // Je vais chercher les infos dans la base de données
+ $controller_method = $route["controller_method"];
+ $GLOBALS["data"] = Controller::$controller_method();
 
-// pattern qui permet de reconnaître toutes les url des nodes 
-$pattern = '~^/node/([0-9]+)/?$~';
-
-
-if (preg_match($pattern, $path, $matches, PREG_OFFSET_CAPTURE)) {
-  if(isset($matches[1][0])) {
-
-   // Récupération des données via la classe Model
-    $GLOBALS["node_data"] = Model::getNode($matches[1][0]);
-
-   // Affichage des données
-   require_once($_SERVER["DOCUMENT_ROOT"].'/view/node.php'); 
- }
+ // Appel du template
+ require_once($_SERVER["DOCUMENT_ROOT"] . "/view/" . $route["view_name"]);
 }
