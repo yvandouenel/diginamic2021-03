@@ -116,7 +116,7 @@ export default class FetchData {
       else throw new Error("Problème de réponse ", response);
     })
     .then(data => {
-      console.log("data reçues dans getTerms :", data);
+      console.log("data reçues dans getCards :", data);
       if (data) {
         return data;
       } else {
@@ -165,7 +165,7 @@ export default class FetchData {
         field_carte_colonne: [
           {
             target_id: card.colonne,
-            url: "/taxonomy/term/" + card.colonnne
+            url: "/taxonomy/term/" + card.colonne
           }
         ],
         field_carte_thematique: [
