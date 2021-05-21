@@ -36,6 +36,11 @@ export default class Term extends DomUtils {
       this.app.fd.getCards(this.app.user, this.app.token, this.id)
       .then((data) => {
         console.log('Cards dans manageEvents de Term : ', data);
+        // Alimentation du tableau des colonnes
+        this.app.columns = data;
+
+        // Appel de la méthode qui affiche les colonnes
+        this.app.renderColumns();
       })
       .catch((error) => {
         console.error('Erreur attrapée dans manageEvents de Term :' + error.message);

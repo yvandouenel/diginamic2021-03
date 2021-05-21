@@ -2,6 +2,7 @@ import DomUtils from "./utils/DomUtils.js";
 import Form from "./components/Form.js";
 import FetchData from "./services/FetchData.js";
 import Term from "./components/Term.js";
+import Column from "./components/Column.js";
 
 class App extends DomUtils {
   constructor() {
@@ -83,7 +84,7 @@ class App extends DomUtils {
         value : "d-flex justify-content-center"
       }
     ], document.getElementById("app"));
-    const main = this.createCompleteDomElement("main", "", [], document.getElementById("app"));
+    const main = this.createCompleteDomElement("main", "", [{name: "class", value: "container-fluid"}], document.getElementById("app"));
     const footer = this.createCompleteDomElement("footer", "", [], document.getElementById("app"));
     const form_login = new Form(main, {
       inputs: [
@@ -124,6 +125,19 @@ class App extends DomUtils {
       main: main,
       footer: footer,
       form_login: form_login
+    }
+  }
+  renderColumns() {
+    // Supression des colonnes si elles existent déjà
+    const existing_cols_section = document.getElementById("cols-section");
+    if(existing_cols_section != null) {
+      existing_cols_section.remove();
+    }
+    // Création de l'élément du DOM qui contient les colonnes
+    const cols_section = this.createCompleteDomElement("section", "", [{name: "class", value: "row"},{name: "id", value: "cols-section"}], this.domElements.main);
+    // parcours des colonnes
+    for(let col of this.columns) {
+      let c = new Column(col.id, col.name, col.cartes, this, cols_section);
     }
   }
 }
