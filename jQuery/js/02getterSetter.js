@@ -27,4 +27,27 @@ jQuery(function($){
    // Récupération de la couleur des label
    const color_label = $("label").css("color");
    console.log(`couleur des labels : `, color_label);
+
+   // Modification de la couleur des titres 1
+   $("h1:last").css("color", "pink");
+
+   // Boucler sur les éléments du dom récupérés et enrichis par jQuery
+   $("p").each(function(){
+    console.log($(this).text());
+  });
+
+  // Insertion d'un paragraphe avant le formulaire
+  $( "<p>Paragraphe avant le formulaire</p>" ).insertBefore( "form#first-form" );
+
+  // au click sur un paragraphe, je cache ou j'affiche le paragraphe suivant
+  $("p").on("click", function(e){
+    
+    //if($(this) !=  $("p:last")) $(this).next().slideToggle(2000);
+    $(this).animate({'font-size': '2em','margin-left': '50px'}, 3000,function(){
+      $(this).animate({'font-size': '1em','margin-left': '0px'},3000);
+    });
+  });
+
+  // Animation avec animate
+  
 });
