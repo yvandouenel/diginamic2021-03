@@ -30,7 +30,7 @@ jQuery(function($){
         html_card += `</article>`;
        
 
-        $(html_card).appendTo(".column-memo > div:first");
+        $(html_card).appendTo(".column-memo:first");
             
     }
 
