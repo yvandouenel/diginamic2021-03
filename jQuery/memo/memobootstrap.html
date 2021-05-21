@@ -17,6 +17,8 @@
     integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/stylememobootstrap.css">
+    <script src="./js/custom.js"></script>
+
 </head>
 
 <body>
@@ -219,6 +221,38 @@
 
         </section>
 
+      </div>
+    </div>
+    <div class="modal fade" id="form-add-card" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajout d'une carte</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+            <form>
+              <div class="form-group">
+                <label for="question">Question</label>
+                <input type="text" class="form-control" id="question" >
+              </div> 
+              <div class="form-group">
+                <label for="answer">Réponse</label>
+                <input type="text" class="form-control" id="answer" >
+              </div>
+              
+              <button id="submit-btn-add" type="button" class="btn btn-primary">Enregistrer</button>
+              
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            
+          </div>
+        </div>
       </div>
     </div>
   </main>
