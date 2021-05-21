@@ -23,4 +23,8 @@ jQuery(function($){
     // en utilisant la méthode val
     $('#euro').val($('#franc').val() / 1.1);
    });
+
+   // Récupération de la couleur des label
+   const color_label = $("label").css("color");
+   console.log(`couleur des labels : `, color_label);
 });
