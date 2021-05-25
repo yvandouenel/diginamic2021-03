@@ -13,8 +13,26 @@ jQuery(function($){
         
         // Création de l'élément du dom correspondant à la carte
         createDOMCard();
+
+        // Cacher la modale
+        $('#form-add-card').modal('hide');
     });
 
+   // Exercices à rendre pour vendredi 28 mai 2021
+   // Faire en sorte que les boutons d'ajout de carte ajoutent bien dans la bonne colonne (parmi les 4)
+   // Faire en sorte que chaque carte soit créée avec le contenu de la question et de la réponse provenant du formulaire
+   // Ajouter un bouton qui permet de supprimer chaque carte (ainsi que tout le mécanisme qui permet réellement de supprimer la carte)
+   // Ajouter un bouton qui permet de modifier chaque carte (ainsi que tout le mécanisme qui permet réellement de modifier la carte)
+
+   // Utilisation de la méthode "fetch" pour récupérer les cartes et les afficher dans les bonnes colonnes en cliquant 
+   // sur les termes (html, css, )
+
+   // Si tout cela est trop compliqué pour vous, vous pourrez me présenter du code plus simple (vos propres exercices) et je noterai en fonction de la complexité du code et surtout de votre capacité à répondre à mes questions.
+
+
+/**
+ * Création et ajout d'une carte dans le DOM
+ */
     function createDOMCard() {
         let html_card = "";
         html_card += `<article class="mb-4 card bg-secondary p-1 pb-3 text-light">`;
