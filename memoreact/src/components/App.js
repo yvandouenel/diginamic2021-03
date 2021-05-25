@@ -1,6 +1,7 @@
 // imrc
 import React, { Component } from 'react';
 import Card from './Card';
+import Term from './Term';
 import FetchData from './../services/FetchData';
 
 // ccs
@@ -89,6 +90,15 @@ class App extends Component {
     });
     
   }
+  renderTerms = () => {
+    if(this.state.terms.length) {
+      return(
+        <nav>
+          {this.state.terms.map(term => <Term toto="hello" key={term.id} name={term.name} />)}
+        </nav>
+      )
+    }
+  }
   /**
    * Renvoie un message en fonction de la valeur du token
    * @returns string 
@@ -121,6 +131,7 @@ class App extends Component {
       <div className="container">
         <header>
           <h1>Memo</h1>
+          {this.renderTerms()}
           {this.renderUser()}
         </header>
         <main>
