@@ -13,7 +13,8 @@ class App extends Component {
       title: "Mémo",
       display_form: false,
       token: "",
-      user: {}
+      user: {},
+      terms: []
      }
 
      // propriété qui va nous permettre de communiquer avec le serveur
@@ -53,12 +54,34 @@ class App extends Component {
   componentDidMount  = () => {
     console.log(`dans componentDidMount`);
     this.fd.getToken()
-    .then((token) => {
+    .then(token => {
       // ici j'ai bien récupéré mon token
       console.log(`token dans componentDidMount  : ${token}`);
-      // Modification du state
+       // Modification du state
       const state = { ... this.state};
       state.token = token;
+      this.setState(state); 
+      return this.fd.getUser(token, "y", "y");
+    })
+    .then(user => {
+      console.log(`user dans componentDidMount : `, user);
+      
+      // Modification du state
+      const state = { ... this.state};
+      state.user = {
+        login: "y",
+        pwd: "y",
+        uid: user.current_user.uid
+      }
+      this.setState(state);
+      return this.fd.getTerms(this.state.user, this.state.token);
+    })
+    .then(terms => {
+      console.log(`terms dans componentDidMount : `, terms);
+      
+      // Modification du state
+      const state = { ... this.state};
+      state.terms = terms;
       this.setState(state);
     })
     .catch(error => {
