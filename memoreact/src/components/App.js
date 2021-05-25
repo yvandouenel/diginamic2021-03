@@ -1,13 +1,26 @@
 // imrc
 import React, { Component } from 'react';
 import Card from './Card';
+import FetchData from './../services/FetchData';
 
 // ccs
 class App extends Component {
-  state = { 
-    title: "Mémo",
-    display_form: false
-   } // objet littéral vide par défaut
+  // appel du constructeur
+  constructor() {
+    super();
+
+    this.state = { 
+      title: "Mémo",
+      display_form: false,
+      token: "",
+      user: {}
+     }
+
+     // propriété qui va nous permettre de communiquer avec le serveur
+     this.fd = new FetchData();
+
+  }
+  
 
   renderForm() {
     if(this.state.display_form) {
@@ -25,26 +38,76 @@ class App extends Component {
   handletoggleForm = () => {
     console.log(`Dans handletoggleForm`);
     console.log("this : ", this);
-    
-  let display_form = this.state.display_form ? false : true;
+    // opérateur ternaire () ? valeur : autre_valeur;
+    let display_form = this.state.display_form ? false : true;
     // Set State compare l'objet qu'on lui donne en argument avec le state du component en cours
     // S'il y a une différence, alors, render est appelée et l'interface modifiée
-    const obj = { 
-      title: "Mémo",
-      display_form: display_form
-     }
+    let state = {... this.state }; // clone du state du component en cours
+    state.display_form = display_form;// modification de la propriété qui m'intéresse
 
-     this.setState(obj);
+     this.setState(state);
+  }
+  /**
+   * Appelé une fois que le composant est "monté"
+   */
+  componentDidMount  = () => {
+    console.log(`dans componentDidMount`);
+    this.fd.getToken()
+    .then((token) => {
+      // ici j'ai bien récupéré mon token
+      console.log(`token dans componentDidMount  : ${token}`);
+      // Modification du state
+      const state = { ... this.state};
+      state.token = token;
+      this.setState(state);
+    })
+    .catch(error => {
+      error.log("Erreur dans componentDidMount :",  error.message)
+    });
+    
+  }
+  /**
+   * Renvoie un message en fonction de la valeur du token
+   * @returns string 
+   */
+  renderToken = () => {
+    if(this.state.token) {
+      return (
+        <p className="text-success">Token ok</p>
+      )
+    } else {
+      return (
+        <p className="text-danger">Problème de token</p>
+      )
+    }
+  }
+  renderUser = () => {
+    // Test si objet vide ?
+    if(this.state.user.hasOwnProperty('uid')) {
+      return(
+        <p className="text-success">User ok</p>
+      )
+    } else {
+      return (
+        <p className="text-danger">Utilisateur non connecté</p>
+      )
+    }
   }
   render() {
     return (
-      <section>
-        <h1>{this.state.title}</h1>
-        <Card question="Qui est l'inventeur du JS ?" answer="Brendan Eich" />{/* équivalent à new Card("Qui est ...", "Brendan Eich") */}
-        <Card question="Qui est l'inventeur du web ?" answer="Tim Berners Lee" />{/* équivalent à new Card("Qui est ...", "Brendan Eich") */}
-        {this.renderForm()}
-        <p onClick={this.handletoggleForm}>Afficher le formulaire</p>
-      </section>
+      <div className="container">
+        <header>
+          <h1>Memo</h1>
+          {this.renderUser()}
+        </header>
+        <main>
+          Main ici
+        </main>
+        <footer> 
+          Footer ici
+          <div id="msg">{this.renderToken()}</div>
+        </footer>
+      </div>
     );
   }
 }
