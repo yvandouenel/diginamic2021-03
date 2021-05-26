@@ -94,7 +94,13 @@ export default class FetchData {
           }
         });
     }
-  
+  /**
+   * Va chercher les colonnes (à apprendre, ...) sous forme de tableau et les cartes correspondantes également sous forme de tableau
+   * @param {object} user 
+   * @param {string} token 
+   * @param {number} term_number 
+   * @returns promise - dans le cas favorable, retourne les données 
+   */
     getCards(user, token, term_number) {
       return fetch("https://www.coopernet.fr" +
         "/memo/list_cartes_term/" +
